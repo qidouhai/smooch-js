@@ -24,15 +24,15 @@
     "test:phantom": "karma start karma.conf.js --no-single-run --reporters progress --browsers PhantomJS",
     "karma": "karma start karma.conf.js --reporters spec --browsers PhantomJS",
     "test:ci": "karma start karma.conf.js --single-run --reporters junit --browsers PhantomJS",
-    "dev-server": "webpack-dev-server --config webpack-dev-server.config.js --colors --port 2992 --inline  --no-info",
-    "hot-dev-server": "webpack-dev-server --config webpack-hot-dev-server.config.js --hot --colors --port 2992 --inline --no-info",
-    "build": "webpack --config webpack-production.config.js --progress --profile --colors",
-    "build:assets": "webpack --config webpack-assets.config.js --progress --profile --colors",
+    "dev-server": "webpack-dev-server --config webpack-dev-server.config.js --port 2992 --inline  --no-info",
+    "hot-dev-server": "webpack-dev-server --config webpack-hot-dev-server.config.js --hot --port 2992 --inline --no-info",
+    "build": "webpack --config webpack-production.config.js --progress --profile",
+    "build:assets": "webpack --config webpack-assets.config.js --progress --profile",
     "build:npm": "rm -rf lib/ && npm run babelify && npm run build:assets && rm -f lib/constants/*.mp3 && rm -f lib/constants/*.png",
     "start-dev": "nodemon --watch dev-server/ --watch src/index.html --watch src/embedded.html --watch config/config.json dev-server/server-development",
     "start": "node dev-server/server-production",
     "lint": "eslint . --ext=js --ext=jsx",
-    "babelify": "babel -d lib/ src/js/"
+    "babelify": "BABEL_ENV=babelify babel -d lib/ src/js/"
   },
   "main": "lib/main.js",
   "homepage": "https://smooch.io",
@@ -68,6 +68,7 @@
     "babel-core": "6.9.0",
     "babel-eslint": "6.0.4",
     "babel-loader": "6.2.4",
+    "babel-plugin-system-import-transformer": "2.2.1",
     "babel-plugin-transform-class-properties": "6.9.0",
     "babel-plugin-transform-runtime": "6.9.0",
     "babel-polyfill": "6.9.0",
@@ -136,9 +137,9 @@
     "style-loader": "0.13.0",
     "underscore": "1.8.3",
     "url-loader": "0.5.7",
-    "webpack": "1.12.9",
-    "webpack-cli": "1.0.0",
-    "webpack-dev-server": "1.14.0"
+    "webpack": "^2.1.0-beta.18",
+    "webpack-cli": "^1.0.0",
+    "webpack-dev-server": "^2.1.0-beta.0"
   },
   "peerDependencies": {
     "babel-polyfill": "6.9.x",

@@ -54,7 +54,6 @@ module.exports = function(options) {
     var externals = [];
     var modulesDirectories = ['node_modules'];
     var extensions = ['', '.web.js', '.js', '.jsx'];
-    var root = path.join(__dirname, 'src');
     var publicPath = options.devServer ?
         'http://' + config.SERVER_HOST + '/_assets/' :
         'https://cdn.smooch.io/';
@@ -63,7 +62,7 @@ module.exports = function(options) {
         path: options.outputPath || path.join(__dirname, 'dist'),
         publicPath: publicPath,
         filename: '[name].js' + (options.longTermCaching ? '?[chunkhash]' : ''),
-        chunkFilename: (options.devServer ? '[id].js' : '[name].js') + (options.longTermCaching ? '?[chunkhash]' : ''),
+        chunkFilename: '[chunkhash].js',
         sourceMapFilename: '[file].map',
         library: options.assetsOnly ? undefined : 'Smooch',
         libraryTarget: options.assetsOnly ? 'commonjs2' : 'umd',
@@ -112,9 +111,7 @@ module.exports = function(options) {
             }),
             new webpack.NoErrorsPlugin(),
 
-            new webpack.BannerPlugin(PACKAGE_NAME + ' ' + VERSION + ' \n' + LICENSE, {
-                entryOnly: true
-            })
+            new webpack.BannerPlugin(PACKAGE_NAME + ' ' + VERSION + ' \n' + LICENSE)
         );
     } else if (options.test) {
         plugins.push(
@@ -156,8 +153,7 @@ module.exports = function(options) {
         },
         externals: externals,
         resolve: {
-            root: root,
-            modulesDirectories: modulesDirectories,
+            modules: modulesDirectories,
             extensions: extensions,
             alias: alias
         },
